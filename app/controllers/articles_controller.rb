@@ -1,12 +1,17 @@
 class ArticlesController < ApplicationController
-  http_basic_authenticate_with name: "pnmthy", password: "123", except: [:index, :show]
+  # http_basic_authenticate_with name: "pnmthy", password: "123", except: [:index, :show]
+            
+  # Add exception handler missing parameter
+  # rescue_from ActionController::ParameterMissing, with: :parameter_missing
   
   def index
     @articles = Article.all
+    render json: @articles, status: :ok
   end
 
   def show
     @article = Article.find(params[:id])
+    render json: @article, status: :ok
   end
 
   def new
@@ -16,12 +21,10 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
 
-    @article.save
-    # render json: @article, status: :created
     if @article.save
-      redirect_to @article
+      render json: @article, status: :created
     else
-      render :new
+      render json: @article.errors, status: :unprocessable_entity
     end
   end
 
@@ -33,9 +36,9 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
 
     if @article.update(article_params)
-      redirect_to @article
+      render json: @article, status: :ok
     else
-      render :edit
+      render json: @article.errors, status: :unprocessable_entity
     end
   end
 
@@ -43,7 +46,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article.destroy
 
-    redirect_to root_path
+    head :no_content
   end
 
   private
