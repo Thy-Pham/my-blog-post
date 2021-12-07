@@ -1,9 +1,6 @@
 class ArticlesController < ApplicationController
-  # http_basic_authenticate_with name: "pnmthy", password: "123", except: [:index, :show]
-            
-  # Add exception handler missing parameter
-  # rescue_from ActionController::ParameterMissing, with: :parameter_missing
-  
+  before_action :authenticate_user!, except: [:index, :show]
+
   def index
     @articles = Article.all
     render json: @articles, status: :ok
@@ -19,8 +16,9 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(article_params)
+    @article = current_user.articles.new(article_params)
 
+    authorize @article
     if @article.save
       render json: @article, status: :created
     else
@@ -33,7 +31,11 @@ class ArticlesController < ApplicationController
   end
 
   def update
+    # @article = current_user.articles.find(params[:id])
     @article = Article.find(params[:id])
+    # @article =  pundit_user.article.find(params[:id])
+    p @article
+    authorize @article
 
     if @article.update(article_params)
       render json: @article, status: :ok
@@ -44,6 +46,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find(params[:id])
+    authorize @article
     @article.destroy
 
     head :no_content

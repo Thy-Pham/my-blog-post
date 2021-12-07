@@ -2,6 +2,8 @@ class Article < ApplicationRecord
     # validate status implemented in app/models/concerns/visible.rb
     include Visible
 
+    belongs_to :user
+
     # dependent: :destroy 
     # => can destroy articles and no need to destroy its comments in advance
     # Can destroy a article and this automacdestroy all its comments
