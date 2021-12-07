@@ -31,9 +31,8 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    # @article = current_user.articles.find(params[:id])
     @article = Article.find(params[:id])
-    # @article =  pundit_user.article.find(params[:id])
+
     p @article
     authorize @article
 
