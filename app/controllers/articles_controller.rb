@@ -1,5 +1,14 @@
 class ArticlesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  # before_action :authenticate_user!, except: [:index, :show]
+
+  before_action :after_token_authentication, except: [:index, :show]
+
+  def after_token_authentication
+    if params[:authentication_token].present?
+      @user = User.find_by_authentication_token(params[:authentication_token])
+      sign_in @user if @user
+    end
+  end
 
   def index
     @articles = Article.all
@@ -16,8 +25,9 @@ class ArticlesController < ApplicationController
   end
 
   def create
+    # current_user from pundit
     @article = current_user.articles.new(article_params)
-
+    
     authorize @article
     if @article.save
       render json: @article, status: :created
@@ -31,10 +41,9 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    # @article = current_user.articles.find(params[:id])
     @article = Article.find(params[:id])
-    # @article =  pundit_user.article.find(params[:id])
-    p @article
+
+    # p @article
     authorize @article
 
     if @article.update(article_params)

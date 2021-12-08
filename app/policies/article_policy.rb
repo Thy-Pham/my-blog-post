@@ -5,10 +5,10 @@ class ArticlePolicy < ApplicationPolicy
 
     def create?
       @user
-      # true
     end
 
     def update?
+      # check current_user (@user) is matched with record that pundit is received (article)
       @user && @user.id == @record.user_id
     end
 

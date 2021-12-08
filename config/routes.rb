@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :token_authentication_key => 'authentication_key'
   # root "articles#index"
 
   resources :articles do
