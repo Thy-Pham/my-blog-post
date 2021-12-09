@@ -30,6 +30,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'pundit'
 gem 'devise'
 gem 'simple_token_authentication', '~> 1.0' 
+gem 'grape'
+gem 'grape-active_model_serializers'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

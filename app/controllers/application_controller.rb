@@ -1,12 +1,9 @@
 class ApplicationController < ActionController::Base
     # Add this
     include Pundit
-    # acts_as_token_authentication_handler_for User, except: [:index, :show]
 
-    # def pundit_user
-    #     p "HELOOOOOO"
-    #     current_user
-    # end
+    # Not use simple_token_authentication anynore
+    # acts_as_token_authentication_handler_for User, except: [:index, :show]
 
     # Add this to not verify csrf token
     skip_before_action :verify_authenticity_token
