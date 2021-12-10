@@ -32,6 +32,14 @@ gem 'devise'
 gem 'simple_token_authentication', '~> 1.0' 
 gem 'grape'
 gem 'grape-active_model_serializers'
+gem 'grpc'
+gem 'grpc-tools'
+
+source 'https://gem.fury.io/eh-devops/' do
+  # gem 'eh_protobuf'
+  gem 'eh_protobuf', path: '/Users/pnmthy/Documents/Workplace/grpc_proto'
+  gem 'eh_protobuf_core'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
