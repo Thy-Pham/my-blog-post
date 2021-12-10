@@ -4,11 +4,11 @@ class ArticlePolicy < ApplicationPolicy
     end
 
     def create?
-      # @user
-      client = EhProtobuf::EmploymentHero::Client.new
-      response = client.check_admin({ email: @user.email })
-      p "Response: #{response.result}"
-      response.result.authorized
+      @user
+      # client = EhProtobuf::EmploymentHero::Client.new
+      # response = client.check_admin({ email: @user.email })
+      # p "Response: #{response.result}"
+      # response.result.authorized
     end
 
     def update?

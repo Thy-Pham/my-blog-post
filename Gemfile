@@ -35,10 +35,14 @@ gem 'grape-active_model_serializers'
 gem 'grpc'
 gem 'grpc-tools'
 
+gem 'karafka'
+
 source 'https://gem.fury.io/eh-devops/' do
   # gem 'eh_protobuf'
   gem 'eh_protobuf', path: '/Users/pnmthy/Documents/Workplace/grpc_proto'
   gem 'eh_protobuf_core'
+
+  gem 'kafka_handle_event'
 end
 
 group :development, :test do
