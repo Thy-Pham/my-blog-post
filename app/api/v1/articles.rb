@@ -33,9 +33,8 @@ module V1
                     status: params[:status]
                 )
     
-                
-                authorize @article, :create?
                 if @article.save
+                    PublishArticleWorker.perform_at(1.minutes.from_now, @article.id)
                     status :created
                     @article
                 else
