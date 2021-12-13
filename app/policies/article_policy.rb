@@ -7,8 +7,8 @@ class ArticlePolicy < ApplicationPolicy
       # @user
       client = EhProtobuf::EmploymentHero::Client.new
       response = client.check_admin({ email: @user.email })
-      p "Response: #{response.result}"
-      response.result.authorized
+
+      response.result == nil ? false : response.result.authorized
     end
 
     def update?
