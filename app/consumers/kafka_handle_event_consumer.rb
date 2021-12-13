@@ -5,14 +5,12 @@ class KafkaHandleEventConsumer < ApplicationConsumer
     p "Start consuming"
     message = JSON.parse(params.raw_payload)
     message['topic_type'] = params.topic
-    p message
-    KafkaHandleEvent.handle_event(message.to_h.symbolize_keys)
     
-  rescue ActiveRecord::RecordNotUnique => e
-    Rails.logger.error("ERROR in #{self.class.name}#consume: #{e.message}")
-  rescue ActiveRecord::ActiveRecordError => e
-    Rails.logger.error("ERROR in #{self.class.name}#consume: #{e.message}")
-    Raven.capture_exception(e)
+    p message
+    # Call to config/initialized/kafka_handle_event
+    KafkaHandleEvent.handle_event(message)
+    
+  rescue => e
+    puts "Error: #{e.message}"
   end
-  # rubocop:enable I18n/Coverage/StaticString
 end

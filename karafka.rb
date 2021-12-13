@@ -10,19 +10,19 @@ CLIENT_ID = 'blog-post-client'
 require ::File.expand_path('config/environment', __dir__)
 Rails.application.eager_load!
 
-class ConsumerMapper
-  def self.call(raw_consumer_group_name)
-    [
-      Karafka::App.config.client_id,
-      raw_consumer_group_name
-    ].join('.')
-  end
-end
+# class ConsumerMapper
+#   def self.call(raw_consumer_group_name)
+#     [
+#       Karafka::App.config.client_id,
+#       raw_consumer_group_name
+#     ].join('.')
+#   end
+# end
 
 class KarafkaApp < Karafka::App
   setup do |config|
     config.kafka.seed_brokers = %w[kafka://127.0.0.1:9092]
-    config.consumer_mapper = ConsumerMapper
+    # config.consumer_mapper = ConsumerMapper
     config.client_id = CLIENT_ID
     config.batch_fetching = false
     config.batch_consuming = false # consume single message 
